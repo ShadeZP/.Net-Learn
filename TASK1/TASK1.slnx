@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="src/task1.1/task1.1.csproj" />
+  <Project Path="src/task1.2/task1.2.csproj" />
+  <Project Path="src/task1.3/task1.3.csproj" />
+  <Project Path="src/task2/SharedService.csproj" />
+</Solution>
