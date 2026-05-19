@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="FileSystemVisitor.Core/FileSystemVisitor.Core.csproj" />
+  <Project Path="FileSystemVisitor.Desktop/FileSystemVisitor.Desktop.csproj" />
+</Solution>
