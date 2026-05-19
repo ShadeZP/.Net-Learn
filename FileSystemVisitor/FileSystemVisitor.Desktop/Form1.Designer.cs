@@ -35,6 +35,7 @@
             lstResults = new ListBox();
             lblFilter = new Label();
             txtFilter = new TextBox();
+            lblStatus = new Label();
             SuspendLayout();
             // 
             // lblPath
@@ -97,11 +98,21 @@
             txtFilter.Size = new Size(522, 27);
             txtFilter.TabIndex = 6;
             // 
+            // lblStatus
+            // 
+            lblStatus.AutoSize = true;
+            lblStatus.Location = new Point(50, 450);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(50, 20);
+            lblStatus.TabIndex = 7;
+            lblStatus.Text = "Ready";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 770);
+            Controls.Add(lblStatus);
             Controls.Add(txtFilter);
             Controls.Add(lblFilter);
             Controls.Add(lstResults);
@@ -111,7 +122,6 @@
             Controls.Add(lblPath);
             Name = "Form1";
             Text = "Form1";
-            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -125,5 +135,6 @@
         private ListBox lstResults;
         private Label lblFilter;
         private TextBox txtFilter;
+        private Label lblStatus;
     }
 }
