@@ -1,5 +1,6 @@
 ﻿using System;
 using Task3.DoNotChange;
+using Task3.Exceptions;
 
 namespace Task3
 {
@@ -12,25 +13,29 @@ namespace Task3
             _userDao = userDao;
         }
 
-        public int AddTaskForUser(int userId, UserTask task)
+        public void AddTaskForUser(int userId, UserTask task)
+        {
+            var user = ValidateAndGetUser(userId);
+
+            foreach (var t in user.Tasks)
+            {
+                if (string.Equals(task.Description, t.Description, StringComparison.OrdinalIgnoreCase))
+                    throw new UserTaskAlreadyExistsException();
+            }
+
+            user.Tasks.Add(task);
+        }
+
+        private IUser ValidateAndGetUser(int userId)
         {
             if (userId < 0)
-                return -1;
+                throw new InvalidUserIdException();
 
             var user = _userDao.GetUser(userId);
             if (user == null)
-                return -2;
+                throw new UserNotFoundException();
 
-            var tasks = user.Tasks;
-            foreach (var t in tasks)
-            {
-                if (string.Equals(task.Description, t.Description, StringComparison.OrdinalIgnoreCase))
-                    return -3;
-            }
-
-            tasks.Add(task);
-
-            return 0;
+            return user;
         }
     }
 }
