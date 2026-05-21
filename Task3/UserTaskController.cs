@@ -20,17 +20,7 @@ namespace Task3
                 _taskService.AddTaskForUser(userId, task);
                 return true;
             }
-            catch (InvalidUserIdException ex)
-            {
-                model.AddAttribute("action_result", ex.Message);
-                return false;
-            }
-            catch (UserNotFoundException ex)
-            {
-                model.AddAttribute("action_result", ex.Message);
-                return false;
-            }
-            catch (UserTaskAlreadyExistsException ex)
+            catch (UserTaskException ex)
             {
                 model.AddAttribute("action_result", ex.Message);
                 return false;

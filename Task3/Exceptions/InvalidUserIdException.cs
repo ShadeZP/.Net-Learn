@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Task3.Exceptions
 {
-    internal class InvalidUserIdException: Exception
+    internal class InvalidUserIdException: UserTaskException
     {
         public InvalidUserIdException() : base("Invalid userId") { }
     }
