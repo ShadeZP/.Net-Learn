@@ -1,0 +1,2 @@
+MyInt=42
+MyFloat=3.14
