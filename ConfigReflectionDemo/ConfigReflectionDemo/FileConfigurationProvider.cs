@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace ConfigReflectionDemo
 {
-    public class FileConfigurationProvider : IConfigurationProvider
+    public class FileConfigurationProvider : ISettingsProvider
     {
         private readonly string _filePath = "settings.txt";
         private readonly Dictionary<string, string> _dict;
@@ -14,7 +15,10 @@ namespace ConfigReflectionDemo
             _dict = File.Exists(_filePath)
                 ? File.ReadAllLines(_filePath)
                     .Where(l => l.Contains('='))
-                    .Select(l => l.Split('='))
+                    .Select(l => {
+                        int idx = l.IndexOf('=');
+                        return new[] { l[..idx], l[(idx + 1)..] };
+                    })
                     .ToDictionary(arr => arr[0], arr => arr[1])
                 : [];
         }
@@ -29,7 +33,7 @@ namespace ConfigReflectionDemo
 
         public void SetValue(string key, object value)
         {
-            _dict[key] = value.ToString();
+            _dict[key] = Convert.ToString(value, CultureInfo.InvariantCulture);
             File.WriteAllLines(_filePath, _dict.Select(kv => $"{kv.Key}={kv.Value}"));
         }
 
@@ -38,9 +42,9 @@ namespace ConfigReflectionDemo
         private object ConvertValue(string str, Type t)
         {
             if (t == typeof(string)) return str;
-            if (t == typeof(int)) return int.Parse(str);
-            if (t == typeof(float)) return float.Parse(str);
-            if (t == typeof(TimeSpan)) return TimeSpan.Parse(str);
+            if (t == typeof(int)) return int.Parse(str, CultureInfo.InvariantCulture);
+            if (t == typeof(float)) return float.Parse(str, CultureInfo.InvariantCulture);
+            if (t == typeof(TimeSpan)) return TimeSpan.Parse(str, CultureInfo.InvariantCulture);
             throw new NotSupportedException("Type not supported");
         }
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ConfigReflectionDemo
 {
-    public class ConfigurationManagerConfigurationProvider: IConfigurationProvider
+    public class ConfigurationManagerConfigurationProvider: ISettingsProvider
     {
         readonly IConfigurationRoot _config;
         public ConfigurationManagerConfigurationProvider()
