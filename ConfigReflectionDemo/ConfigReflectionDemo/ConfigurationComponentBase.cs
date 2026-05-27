@@ -1,26 +1,17 @@
-﻿using System;
+﻿using ConfigReflectionAbstractions;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace ConfigReflectionDemo
 {
     public class ConfigurationComponentBase
     {
-        private static ISettingsProvider GetProvider(ProviderType type)
-        {
-            return type switch
-            {
-                ProviderType.File => new FileConfigurationProvider(),
-                ProviderType.ConfigurationManager => new ConfigurationManagerConfigurationProvider(),
-                _ => throw new Exception("Unknown provider type")
-            };
-        }
-
         public void LoadSettings()
         {
-            var props = this.GetType()
-                .GetProperties()
+            var props = this.GetType().GetProperties()
                 .Where(p => Attribute.IsDefined(p, typeof(ConfigurationItemAttribute)));
 
             var providerCache = new Dictionary<ProviderType, ISettingsProvider>();
@@ -31,7 +22,7 @@ namespace ConfigReflectionDemo
 
                 if (!providerCache.TryGetValue(attr.ProviderType, out var provider))
                 {
-                    provider = GetProvider(attr.ProviderType);
+                    provider = ProviderFactory.CreateProvider(attr.ProviderType);
                     providerCache[attr.ProviderType] = provider;
                 }
 
@@ -42,8 +33,7 @@ namespace ConfigReflectionDemo
 
         public void SaveSettings()
         {
-            var props = this.GetType()
-                .GetProperties()
+            var props = this.GetType().GetProperties()
                 .Where(p => Attribute.IsDefined(p, typeof(ConfigurationItemAttribute)));
 
             var providerCache = new Dictionary<ProviderType, ISettingsProvider>();
@@ -54,7 +44,7 @@ namespace ConfigReflectionDemo
 
                 if (!providerCache.TryGetValue(attr.ProviderType, out var provider))
                 {
-                    provider = GetProvider(attr.ProviderType);
+                    provider = ProviderFactory.CreateProvider(attr.ProviderType);
                     providerCache[attr.ProviderType] = provider;
                 }
 

@@ -1,14 +1,15 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ConfigReflectionAbstractions;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConfigReflectionDemo
+namespace ConfigurationManagerSettingsProvider
 {
-    public class ConfigurationManagerConfigurationProvider: ISettingsProvider
+    public class ConfigurationManagerSettingsProvider: ISettingsProvider
     {
         readonly IConfigurationRoot _config;
-        public ConfigurationManagerConfigurationProvider()
+        public ConfigurationManagerSettingsProvider()
         {
             _config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true)
@@ -33,3 +34,4 @@ namespace ConfigReflectionDemo
         }
     }
 }
+

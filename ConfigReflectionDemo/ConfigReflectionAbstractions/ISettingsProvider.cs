@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConfigReflectionDemo
+namespace ConfigReflectionAbstractions
 {
     public interface ISettingsProvider
     {

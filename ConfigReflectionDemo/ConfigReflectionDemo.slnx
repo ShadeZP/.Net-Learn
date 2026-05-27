@@ -1,3 +1,6 @@
 <Solution>
+  <Project Path="ConfigReflectionAbstractions/ConfigReflectionAbstractions.csproj" Id="5c10b508-7728-49b9-9b45-d2da63c091e8" />
   <Project Path="ConfigReflectionDemo/ConfigReflectionDemo.csproj" />
+  <Project Path="ConfigurationManagerSettingsProvider/ConfigurationManagerSettingsProvider.csproj" Id="43c1fac6-a07d-4d5b-9010-9bcae1efd422" />
+  <Project Path="FileSettingsProvider/FileSettingsProvider.csproj" Id="06ee3784-04d9-4f80-afbc-2add111c6e1f" />
 </Solution>

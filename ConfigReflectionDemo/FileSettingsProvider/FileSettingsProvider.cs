@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
+﻿using System.Globalization;
+using ConfigReflectionAbstractions;
 
-namespace ConfigReflectionDemo
+namespace FileSettingsProvider
 {
-    public class FileConfigurationProvider : ISettingsProvider
+    public class FileSettingsProvider: ISettingsProvider
     {
         private readonly string _filePath = "settings.txt";
         private readonly Dictionary<string, string> _dict;
 
-        public FileConfigurationProvider()
+        public FileSettingsProvider()
         {
             _dict = File.Exists(_filePath)
                 ? File.ReadAllLines(_filePath)
