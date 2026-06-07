@@ -19,4 +19,10 @@ public class LeapYearTests
     {
         Assert.False(LeapYear.IsLeap(1900));
     }
+
+    [Fact]
+    public void Returns_true_for_year_divisible_by_400()
+    {
+        Assert.True(LeapYear.IsLeap(2000));
+    }
 }
