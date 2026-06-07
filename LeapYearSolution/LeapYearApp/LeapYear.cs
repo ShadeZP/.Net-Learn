@@ -4,12 +4,12 @@ public class LeapYear
 {
     public static bool IsLeap(int year)
     {
-        if (year == 1996)
+        if (year % 400 == 0)
             return true;
-        if (year == 1999)
+        if (year % 100 == 0)
             return false;
-        if (year == 1900)
-            return false;
-        throw new System.NotImplementedException();
+        if (year % 4 == 0)
+            return true;
+        return false;
     }
 }
