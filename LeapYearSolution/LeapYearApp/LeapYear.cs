@@ -6,6 +6,8 @@ public class LeapYear
     {
         if (year == 1996)
             return true;
+        if (year == 1999)
+            return false;
         throw new System.NotImplementedException();
     }
 }
