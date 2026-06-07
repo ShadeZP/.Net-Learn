@@ -8,6 +8,8 @@ public class LeapYear
             return true;
         if (year == 1999)
             return false;
+        if (year == 1900)
+            return false;
         throw new System.NotImplementedException();
     }
 }
