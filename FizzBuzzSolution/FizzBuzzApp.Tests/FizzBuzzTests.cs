@@ -16,4 +16,11 @@ public class FizzBuzzTests
         var result = FizzBuzz.GetResult(3);
         Assert.Equal("Fizz", result);
     }
+
+    [Fact]
+    public void Returns_Buzz_For_Number_5()
+    {
+        var result = FizzBuzz.GetResult(5);
+        Assert.Equal("Buzz", result);
+    }
 }
