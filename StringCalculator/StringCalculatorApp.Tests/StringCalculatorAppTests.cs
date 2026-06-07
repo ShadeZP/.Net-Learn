@@ -11,7 +11,7 @@ public class StringCalculatorAppTests
     [Fact]
     public void Returns_number_for_single_number_string()
     {
-        var result = StringCalculator.Add("1");
+        var result = StringCalculatorApp.Add("1");
         Assert.Equal(1, result);
     }
 }
