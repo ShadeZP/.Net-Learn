@@ -1,28 +1,20 @@
-﻿namespace LeapYearApp.Tests;
+﻿using Xunit;
+using LeapYearApp;
 
 public class LeapYearTests
 {
-    [Fact]
-    public void Returns_true_for_typical_leap_year()
+    [Theory]
+    [InlineData(1996, true)]
+    [InlineData(1999, false)]
+    [InlineData(1900, false)]
+    [InlineData(2000, true)]
+    [InlineData(2024, true)]
+    [InlineData(2100, false)]
+    [InlineData(2400, true)]
+    [InlineData(1800, false)]
+    [InlineData(2015, false)]
+    public void Returns_correct_value_for_various_years(int year, bool expected)
     {
-        Assert.True(LeapYear.IsLeap(1996));
-    }
-
-    [Fact]
-    public void Returns_false_for_non_leap_year()
-    {
-        Assert.False(LeapYear.IsLeap(1999));
-    }
-
-    [Fact]
-    public void Returns_false_for_century_year_not_divisible_by_400()
-    {
-        Assert.False(LeapYear.IsLeap(1900));
-    }
-
-    [Fact]
-    public void Returns_true_for_year_divisible_by_400()
-    {
-        Assert.True(LeapYear.IsLeap(2000));
+        Assert.Equal(expected, LeapYear.IsLeap(year));
     }
 }
