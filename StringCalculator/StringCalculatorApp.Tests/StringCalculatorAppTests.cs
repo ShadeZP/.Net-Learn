@@ -21,4 +21,11 @@ public class StringCalculatorAppTests
         var result = StringCalculatorApp.Add("1,2");
         Assert.Equal(3, result);
     }
+
+    [Fact]
+    public void Returns_sum_for_multiple_numbers_in_string()
+    {
+        var result = StringCalculatorApp.Add("1,2,3");
+        Assert.Equal(6, result);
+    }
 }
