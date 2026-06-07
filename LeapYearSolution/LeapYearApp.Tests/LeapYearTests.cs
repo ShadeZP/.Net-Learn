@@ -13,4 +13,10 @@ public class LeapYearTests
     {
         Assert.False(LeapYear.IsLeap(1999));
     }
+
+    [Fact]
+    public void Returns_false_for_century_year_not_divisible_by_400()
+    {
+        Assert.False(LeapYear.IsLeap(1900));
+    }
 }
