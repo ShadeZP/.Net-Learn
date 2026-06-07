@@ -9,4 +9,11 @@ public class FizzBuzzTests
         var result = FizzBuzz.GetResult(1);
         Assert.Equal("1", result);
     }
+
+    [Fact]
+    public void Returns_Fizz_For_Number_3()
+    {
+        var result = FizzBuzz.GetResult(3);
+        Assert.Equal("Fizz", result);
+    }
 }
