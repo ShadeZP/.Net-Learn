@@ -51,4 +51,11 @@ public class StringCalculatorAppTests
         );
         Assert.Equal("negatives not allowed: -2,-5", ex.Message);
     }
+
+    [Fact]
+    public void Ignores_numbers_greater_than_1000()
+    {
+        var result = StringCalculatorApp.Add("2,1001,3,1500");
+        Assert.Equal(5, result);
+    }
 }
