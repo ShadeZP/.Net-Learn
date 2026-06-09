@@ -35,4 +35,11 @@ public class StringCalculatorAppTests
         var result = StringCalculatorApp.Add("1\n2,3");
         Assert.Equal(6, result);
     }
+
+    [Fact]
+    public void Returns_sum_for_numbers_with_custom_single_char_delimiter()
+    {
+        var result = StringCalculatorApp.Add(";\n1;2");
+        Assert.Equal(3, result);
+    }
 }
