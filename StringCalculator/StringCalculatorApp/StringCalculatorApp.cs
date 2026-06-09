@@ -29,6 +29,6 @@ public class StringCalculatorApp
             throw new ArgumentException("negatives not allowed: " + string.Join(',', negatives));
         }
 
-        return ints.Sum();
+        return ints.Where(n => n <= 1000).Sum();
     }
 }
