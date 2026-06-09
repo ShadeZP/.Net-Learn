@@ -58,4 +58,11 @@ public class StringCalculatorAppTests
         var result = StringCalculatorApp.Add("2,1001,3,1500");
         Assert.Equal(5, result);
     }
+
+    [Fact]
+    public void Returns_sum_for_multiple_multi_char_custom_delimiters()
+    {
+        var result = StringCalculatorApp.Add("//[***][%%]\n1***2%%3");
+        Assert.Equal(6, result);
+    }
 }
