@@ -7,7 +7,9 @@ public class StringCalculatorApp
         if (string.IsNullOrEmpty(numbers))
             return 0;
 
-        var numberStrings = numbers.Split(',');
+        var delimiters = new[] { ',', '\n' };
+        var numberStrings = numbers.Split(delimiters);
+
         return numberStrings.Sum(s => int.Parse(s));
     }
 }
