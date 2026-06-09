@@ -42,4 +42,13 @@ public class StringCalculatorAppTests
         var result = StringCalculatorApp.Add(";\n1;2");
         Assert.Equal(3, result);
     }
+
+    [Fact]
+    public void Throws_exception_when_negative_numbers_are_passed()
+    {
+        var ex = Assert.Throws<System.ArgumentException>(() =>
+            StringCalculatorApp.Add("1,-2,3,-5")
+        );
+        Assert.Equal("negatives not allowed: -2,-5", ex.Message);
+    }
 }
