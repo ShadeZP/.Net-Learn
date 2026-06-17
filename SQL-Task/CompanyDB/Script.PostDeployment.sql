@@ -10,98 +10,61 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+DELETE FROM [Employee];
+DELETE FROM [Company];
+DELETE FROM [Person];
+DELETE FROM [Address];
+
+DBCC CHECKIDENT ('Employee', RESEED, 0);
+DBCC CHECKIDENT ('Company', RESEED, 0);
+DBCC CHECKIDENT ('Person', RESEED, 0);
+DBCC CHECKIDENT ('Address', RESEED, 0);
+
 -- Address
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Address] WHERE Id = 1)
-    INSERT INTO [dbo].[Address] ([Id], [Street], [City], [State], [ZipCode]) VALUES (1, N'Khreshchatyk', N'Kyiv', N'Kyiv oblast', N'01001');
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Address] WHERE Id = 2)
-    INSERT INTO [dbo].[Address] ([Id], [Street], [City], [State], [ZipCode]) VALUES (2, N'Lenina', N'Dnipro', N'Dnipropetrovsk oblast', N'49000');
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Address] WHERE Id = 3)
-    INSERT INTO [dbo].[Address] ([Id], [Street], [City], [State], [ZipCode]) VALUES (3, N'Shevchenka', N'Lviv', N'Lviv oblast', N'79000');
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Address] WHERE Id = 4)
-    INSERT INTO [dbo].[Address] ([Id], [Street], [City], [State], [ZipCode]) VALUES (4, N'Pushkina', N'Harkiv', N'Harkiv oblast', N'61000');
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Address] WHERE Id = 5)
-    INSERT INTO [dbo].[Address] ([Id], [Street], [City], [State], [ZipCode]) VALUES (5, N'Soborna', N'Odessa', N'Odessa oblast', N'65000');
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Address] WHERE Id = 6)
-    INSERT INTO [dbo].[Address] ([Id], [Street], [City], [State], [ZipCode]) VALUES (6, N'Tarasova', N'Poltava', N'Poltava oblast', N'36000');
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Address] WHERE Id = 7)
-    INSERT INTO [dbo].[Address] ([Id], [Street], [City], [State], [ZipCode]) VALUES (7, N'Osvity', N'Zaporizhzhia', N'Zaporizhzhia oblast', N'69000');
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Address] WHERE Id = 8)
-    INSERT INTO [dbo].[Address] ([Id], [Street], [City], [State], [ZipCode]) VALUES (8, N'Peremohy', N'Chernivtsi', N'Chernivtsi oblast', N'58000');
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Address] WHERE Id = 9)
-    INSERT INTO [dbo].[Address] ([Id], [Street], [City], [State], [ZipCode]) VALUES (9, N'Druzhby', N'Vinnytsia', N'Vinnytsia oblast', N'21000');
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Address] WHERE Id = 10)
-    INSERT INTO [dbo].[Address] ([Id], [Street], [City], [State], [ZipCode]) VALUES (10, N'Franka', N'Uzhhorod', N'Zakarpattia oblast', N'88000');
-
+INSERT INTO [dbo].[Address] ([Street], [City], [State], [ZipCode]) VALUES
+(N'Khreshchatyk', N'Kyiv', N'Kyiv oblast', N'01001'),
+(N'Lenina', N'Dnipro', N'Dnipropetrovsk oblast', N'49000'),
+(N'Shevchenka', N'Lviv', N'Lviv oblast', N'79000'),
+(N'Pushkina', N'Harkiv', N'Harkiv oblast', N'61000'),
+(N'Soborna', N'Odessa', N'Odessa oblast', N'65000'),
+(N'Tarasova', N'Poltava', N'Poltava oblast', N'36000'),
+(N'Osvity', N'Zaporizhzhia', N'Zaporizhzhia oblast', N'69000'),
+(N'Peremohy', N'Chernivtsi', N'Chernivtsi oblast', N'58000'),
+(N'Druzhby', N'Vinnytsia', N'Vinnytsia oblast', N'21000'),
+(N'Franka', N'Uzhhorod', N'Zakarpattia oblast', N'88000');
 
 -- Person
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Person] WHERE Id = 1)
-    INSERT INTO [dbo].[Person] ([Id], [FirstName], [LastName]) VALUES (1, N'Ivan', N'Ivanov');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Person] WHERE Id = 2)
-    INSERT INTO [dbo].[Person] ([Id], [FirstName], [LastName]) VALUES (2, N'Petro', N'Petrenko');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Person] WHERE Id = 3)
-    INSERT INTO [dbo].[Person] ([Id], [FirstName], [LastName]) VALUES (3, N'Svitlana', N'Bondarenko');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Person] WHERE Id = 4)
-    INSERT INTO [dbo].[Person] ([Id], [FirstName], [LastName]) VALUES (4, N'Dmytro', N'Shevchenko');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Person] WHERE Id = 5)
-    INSERT INTO [dbo].[Person] ([Id], [FirstName], [LastName]) VALUES (5, N'Olena', N'Kovalchuk');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Person] WHERE Id = 6)
-    INSERT INTO [dbo].[Person] ([Id], [FirstName], [LastName]) VALUES (6, N'Andriy', N'Melnyk');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Person] WHERE Id = 7)
-    INSERT INTO [dbo].[Person] ([Id], [FirstName], [LastName]) VALUES (7, N'Iryna', N'Tkachuk');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Person] WHERE Id = 8)
-    INSERT INTO [dbo].[Person] ([Id], [FirstName], [LastName]) VALUES (8, N'Yulia', N'Polishchuk');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Person] WHERE Id = 9)
-    INSERT INTO [dbo].[Person] ([Id], [FirstName], [LastName]) VALUES (9, N'Sergiy', N'Zakharchenko');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Person] WHERE Id = 10)
-    INSERT INTO [dbo].[Person] ([Id], [FirstName], [LastName]) VALUES (10, N'Kateryna', N'Romanenko');
+INSERT INTO [dbo].[Person] ([FirstName], [LastName]) VALUES
+(N'Ivan', N'Ivanov'),
+(N'Petro', N'Petrenko'),
+(N'Svitlana', N'Bondarenko'),
+(N'Dmytro', N'Shevchenko'),
+(N'Olena', N'Kovalchuk'),
+(N'Andriy', N'Melnyk'),
+(N'Iryna', N'Tkachuk'),
+(N'Yulia', N'Polishchuk'),
+(N'Sergiy', N'Zakharchenko'),
+(N'Kateryna', N'Romanenko');
 
 
 -- Company
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Company] WHERE Id = 1)
-    INSERT INTO [dbo].[Company] ([Id], [Name], [AddressId]) VALUES (1, N'SoftLine', 1);
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Company] WHERE Id = 2)
-    INSERT INTO [dbo].[Company] ([Id], [Name], [AddressId]) VALUES (2, N'IT World', 2);
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Company] WHERE Id = 3)
-    INSERT INTO [dbo].[Company] ([Id], [Name], [AddressId]) VALUES (3, N'DataExpert', 3);
+INSERT INTO [dbo].[Company] ([Name], [AddressId])
+VALUES
+(N'SoftLine',      (SELECT Id FROM [Address] WHERE [Street]=N'Khreshchatyk')),
+(N'IT World',      (SELECT Id FROM [Address] WHERE [Street]=N'Lenina')),
+(N'DataExpert',    (SELECT Id FROM [Address] WHERE [Street]=N'Shevchenka'));
 
 
 -- Employee
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE Id = 1)
-    INSERT INTO [dbo].[Employee] ([Id], [AddressId], [PersonId], [CompanyName], [Position], [EmployeeName])
-    VALUES (1, 1, 1, N'SoftLine', N'Developer', N'Ivan Ivanov');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE Id = 2)
-    INSERT INTO [dbo].[Employee] ([Id], [AddressId], [PersonId], [CompanyName], [Position], [EmployeeName])
-    VALUES (2, 2, 2, N'IT World', N'Manager', N'Petro Petrenko');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE Id = 3)
-    INSERT INTO [dbo].[Employee] ([Id], [AddressId], [PersonId], [CompanyName], [Position], [EmployeeName])
-    VALUES (3, 3, 3, N'DataExpert', N'QA', N'Svitlana Bondarenko');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE Id = 4)
-    INSERT INTO [dbo].[Employee] ([Id], [AddressId], [PersonId], [CompanyName], [Position], [EmployeeName])
-    VALUES (4, 4, 4, N'SoftLine', N'Support', N'Dmytro Shevchenko');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE Id = 5)
-    INSERT INTO [dbo].[Employee] ([Id], [AddressId], [PersonId], [CompanyName], [Position], [EmployeeName])
-    VALUES (5, 5, 5, N'SoftLine', N'HR', N'Olena Kovalchuk');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE Id = 6)
-    INSERT INTO [dbo].[Employee] ([Id], [AddressId], [PersonId], [CompanyName], [Position], [EmployeeName])
-    VALUES (6, 6, 6, N'IT World', N'Admin', N'Andriy Melnyk');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE Id = 7)
-    INSERT INTO [dbo].[Employee] ([Id], [AddressId], [PersonId], [CompanyName], [Position], [EmployeeName])
-    VALUES (7, 7, 7, N'DataExpert', N'Analyst', N'Iryna Tkachuk');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE Id = 8)
-    INSERT INTO [dbo].[Employee] ([Id], [AddressId], [PersonId], [CompanyName], [Position], [EmployeeName])
-    VALUES (8, 8, 8, N'SoftLine', N'Trainee', N'Yulia Polishchuk');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE Id = 9)
-    INSERT INTO [dbo].[Employee] ([Id], [AddressId], [PersonId], [CompanyName], [Position], [EmployeeName])
-    VALUES (9, 9, 9, N'IT World', N'Intern', N'Sergiy Zakharchenko');
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Employee] WHERE Id = 10)
-    INSERT INTO [dbo].[Employee] ([Id], [AddressId], [PersonId], [CompanyName], [Position], [EmployeeName])
-    VALUES (10, 10, 10, N'DataExpert', N'Consultant', N'Kateryna Romanenko');
+INSERT INTO [dbo].[Employee] ([AddressId], [PersonId], [CompanyName], [Position], [EmployeeName])
+VALUES
+((SELECT Id FROM [Address] WHERE [Street]=N'Khreshchatyk'), (SELECT Id FROM [Person] WHERE [FirstName]=N'Ivan' AND [LastName]=N'Ivanov'),      N'SoftLine',   N'Developer',    N'Ivan Ivanov'),
+((SELECT Id FROM [Address] WHERE [Street]=N'Lenina'),        (SELECT Id FROM [Person] WHERE [FirstName]=N'Petro' AND [LastName]=N'Petrenko'),  N'IT World',   N'Manager',      N'Petro Petrenko'),
+((SELECT Id FROM [Address] WHERE [Street]=N'Shevchenka'),    (SELECT Id FROM [Person] WHERE [FirstName]=N'Svitlana' AND [LastName]=N'Bondarenko'),  N'DataExpert', N'QA',      N'Svitlana Bondarenko'),
+((SELECT Id FROM [Address] WHERE [Street]=N'Pushkina'),      (SELECT Id FROM [Person] WHERE [FirstName]=N'Dmytro' AND [LastName]=N'Shevchenko'),   N'SoftLine',   N'Support',     N'Dmytro Shevchenko'),
+((SELECT Id FROM [Address] WHERE [Street]=N'Soborna'),       (SELECT Id FROM [Person] WHERE [FirstName]=N'Olena' AND [LastName]=N'Kovalchuk'),     N'SoftLine',   N'HR',          N'Olena Kovalchuk'),
+((SELECT Id FROM [Address] WHERE [Street]=N'Tarasova'),      (SELECT Id FROM [Person] WHERE [FirstName]=N'Andriy' AND [LastName]=N'Melnyk'),       N'IT World',   N'Admin',       N'Andriy Melnyk'),
+((SELECT Id FROM [Address] WHERE [Street]=N'Osvity'),        (SELECT Id FROM [Person] WHERE [FirstName]=N'Iryna' AND [LastName]=N'Tkachuk'),       N'DataExpert', N'Analyst',     N'Iryna Tkachuk'),
+((SELECT Id FROM [Address] WHERE [Street]=N'Peremohy'),      (SELECT Id FROM [Person] WHERE [FirstName]=N'Yulia' AND [LastName]=N'Polishchuk'),    N'SoftLine',   N'Trainee',     N'Yulia Polishchuk'),
+((SELECT Id FROM [Address] WHERE [Street]=N'Druzhby'),       (SELECT Id FROM [Person] WHERE [FirstName]=N'Sergiy' AND [LastName]=N'Zakharchenko'), N'IT World',   N'Intern',      N'Sergiy Zakharchenko'),
+((SELECT Id FROM [Address] WHERE [Street]=N'Franka'),        (SELECT Id FROM [Person] WHERE [FirstName]=N'Kateryna' AND [LastName]=N'Romanenko'), N'DataExpert', N'Consultant',  N'Kateryna Romanenko');
