@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="FileSystemVisitor.Core/FileSystemVisitor.Core.csproj" />
+  <Project Path="FileSystemVisitor.Desktop/FileSystemVisitor.Desktop.csproj" />
+  <Project Path="FileSystemVisitor.Tests/FileSystemVisitor.Tests.csproj" Id="e2424f20-0006-4aa5-990f-a22168b64275" />
+</Solution>
