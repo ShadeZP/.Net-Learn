@@ -7,5 +7,11 @@ BEGIN
 
     INSERT INTO [dbo].[Company] ([Name], [AddressId])
     SELECT i.CompanyName, i.AddressId
-    FROM inserted i;
+    FROM inserted i
+    WHERE NOT EXISTS (
+        SELECT 1 
+        FROM [dbo].[Company] c
+        WHERE c.Name = i.CompanyName
+          AND c.AddressId = i.AddressId
+    )
 END

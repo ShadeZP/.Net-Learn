@@ -13,12 +13,13 @@ BEGIN
     SET NOCOUNT ON;
     
     IF (
-        ( @EmployeeName IS NULL OR LTRIM(RTRIM(@EmployeeName)) = '' )
-        AND ( @FirstName IS NULL OR LTRIM(RTRIM(@FirstName)) = '' )
-        AND ( @LastName IS NULL OR LTRIM(RTRIM(@LastName)) = '' )
+        ( @EmployeeName IS NULL OR TRIM(@EmployeeName) = '' )
+        AND ( @FirstName IS NULL OR TRIM(@FirstName) = '' )
+        AND ( @LastName IS NULL OR TRIM(@LastName) = '' )
+        AND ( @CompanyName IS NULL OR TRIM(@CompanyName) = '' )
     )
     BEGIN
-        RAISERROR('At least one field (EmployeeName, FirstName, or LastName) must be not empty.', 16, 1);
+        RAISERROR('At least one field (EmployeeName, FirstName, LastName or CompanyName) must be not empty.', 16, 1);
         RETURN;
     END
 
@@ -27,9 +28,9 @@ BEGIN
     DECLARE @AddressId INT;
     SELECT @AddressId = Id FROM [Address]
         WHERE Street = @Street
-          AND ((@City IS NULL AND City IS NULL) OR (City = @City))
-          AND ((@State IS NULL AND State IS NULL) OR (State = @State))
-          AND ((@ZipCode IS NULL AND ZipCode IS NULL) OR (ZipCode = @ZipCode));
+          AND ISNULL(City, '') = ISNULL(@City, '')
+          AND ISNULL(State, '') = ISNULL(@State, '')
+          AND ISNULL(ZipCode, '') = ISNULL(@ZipCode, '')
 
     IF @AddressId IS NULL
     BEGIN
@@ -43,8 +44,8 @@ BEGIN
     IF @FirstName IS NOT NULL OR @LastName IS NOT NULL
     BEGIN
         SELECT @PersonId = Id FROM [Person]
-         WHERE ((@FirstName IS NULL AND FirstName IS NULL) OR (FirstName = @FirstName))
-           AND ((@LastName IS NULL AND LastName IS NULL) OR (LastName = @LastName));
+         WHERE ISNULL(FirstName, '') = ISNULL(@FirstName, '')
+           AND ISNULL(LastName, '') = ISNULL(@LastName, '');
 
         IF @PersonId IS NULL
         BEGIN
