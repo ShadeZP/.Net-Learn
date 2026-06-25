@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.Email;
 using System;
 
 namespace BrainstormSessions
@@ -12,6 +14,14 @@ namespace BrainstormSessions
             Log.Logger = new LoggerConfiguration()
                .MinimumLevel.Debug()
                .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
+               .WriteTo.Email(
+                    from: "noreply@yourproject.local",
+                    to: "admin@yourproject.local",
+                    host: "localhost",
+                    port: 25,
+                    subject: "BrainstormSessions Error Log",
+                    restrictedToMinimumLevel: LogEventLevel.Error
+                )
                .CreateLogger();
             try
             {
