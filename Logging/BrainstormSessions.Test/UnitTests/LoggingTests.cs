@@ -1,49 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BrainstormSessions.Api;
+﻿using BrainstormSessions.Api;
 using BrainstormSessions.Controllers;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
-using log4net.Appender;
-using log4net.Config;
-using log4net.Core;
+using Microsoft.Extensions.Logging;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BrainstormSessions.Test.UnitTests
 {
-    public class LoggingTests : IDisposable
+    public class LoggingTests
     {
-        private readonly MemoryAppender _appender;
-
-        public LoggingTests()
-        {
-            _appender = new MemoryAppender();
-            BasicConfigurator.Configure(_appender);
-        }
-
-        public void Dispose()
-        {
-            _appender.Clear();
-        }
-
         [Fact]
         public async Task HomeController_Index_LogInfoMessages()
         {
             // Arrange
             var mockRepo = new Mock<IBrainstormSessionRepository>();
-            mockRepo.Setup(repo => repo.ListAsync())
-                .ReturnsAsync(GetTestSessions());
-            var controller = new HomeController(mockRepo.Object);
+            mockRepo.Setup(repo => repo.ListAsync()).ReturnsAsync(GetTestSessions());
+            var mockLogger = new Mock<ILogger<HomeController>>();
+            var controller = new HomeController(mockRepo.Object, mockLogger.Object);
 
             // Act
             var result = await controller.Index();
 
             // Assert
-            var logEntries = _appender.GetEvents();
-            Assert.True(logEntries.Any(l => l.Level == Level.Info), "Expected Info messages in the logs");
+            mockLogger.Verify(
+                x => x.Log(
+                    LogLevel.Information,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((v, t) => v.ToString().Contains("Handling GET request for Home/Index.")),
+                    null,
+                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                Times.Once);
         }
 
         [Fact]
@@ -51,9 +42,9 @@ namespace BrainstormSessions.Test.UnitTests
         {
             // Arrange
             var mockRepo = new Mock<IBrainstormSessionRepository>();
-            mockRepo.Setup(repo => repo.ListAsync())
-                .ReturnsAsync(GetTestSessions());
-            var controller = new HomeController(mockRepo.Object);
+            mockRepo.Setup(repo => repo.ListAsync()).ReturnsAsync(GetTestSessions());
+            var mockLogger = new Mock<ILogger<HomeController>>();
+            var controller = new HomeController(mockRepo.Object, mockLogger.Object);
             controller.ModelState.AddModelError("SessionName", "Required");
             var newSession = new HomeController.NewSessionModel();
 
@@ -61,24 +52,37 @@ namespace BrainstormSessions.Test.UnitTests
             var result = await controller.Index(newSession);
 
             // Assert
-            var logEntries = _appender.GetEvents();
-            Assert.True(logEntries.Any(l => l.Level == Level.Warn), "Expected Warn messages in the logs");
+            mockLogger.Verify(
+                x => x.Log(
+                    LogLevel.Warning,
+                    It.IsAny<EventId>(),
+                    It.IsAny<It.IsAnyType>(),
+                    null,
+                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                Times.Once);
         }
 
         [Fact]
         public async Task IdeasController_CreateActionResult_LogErrorMessage_WhenModelStateIsInvalid()
         {
-            // Arrange & Act
+            // Arrange
             var mockRepo = new Mock<IBrainstormSessionRepository>();
-            var controller = new IdeasController(mockRepo.Object);
+            var mockLogger = new Mock<ILogger<IdeasController>>();
+            var controller = new IdeasController(mockRepo.Object, mockLogger.Object);
             controller.ModelState.AddModelError("error", "some error");
 
             // Act
             var result = await controller.CreateActionResult(model: null);
 
             // Assert
-            var logEntries = _appender.GetEvents();
-            Assert.True(logEntries.Any(l => l.Level == Level.Error), "Expected Error messages in the logs");
+            mockLogger.Verify(
+                x => x.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.IsAny<It.IsAnyType>(),
+                    It.IsAny<Exception>(),
+                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                Times.Once);
         }
 
         [Fact]
@@ -88,16 +92,22 @@ namespace BrainstormSessions.Test.UnitTests
             int testSessionId = 1;
             var mockRepo = new Mock<IBrainstormSessionRepository>();
             mockRepo.Setup(repo => repo.GetByIdAsync(testSessionId))
-                .ReturnsAsync(GetTestSessions().FirstOrDefault(
-                    s => s.Id == testSessionId));
-            var controller = new SessionController(mockRepo.Object);
+                .ReturnsAsync(GetTestSessions().FirstOrDefault(s => s.Id == testSessionId));
+            var mockLogger = new Mock<ILogger<SessionController>>();
+            var controller = new SessionController(mockRepo.Object, mockLogger.Object);
 
             // Act
             var result = await controller.Index(testSessionId);
 
             // Assert
-            var logEntries = _appender.GetEvents();
-            Assert.True(logEntries.Count(l => l.Level == Level.Debug) == 2, "Expected 2 Debug messages in the logs");
+            mockLogger.Verify(
+                x => x.Log(
+                    LogLevel.Debug,
+                    It.IsAny<EventId>(),
+                    It.IsAny<It.IsAnyType>(),
+                    null,
+                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                Times.Exactly(2));
         }
 
         private List<BrainstormSession> GetTestSessions()
@@ -117,6 +127,5 @@ namespace BrainstormSessions.Test.UnitTests
             });
             return sessions;
         }
-
     }
 }

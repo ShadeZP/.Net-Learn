@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
@@ -11,18 +12,13 @@ namespace BrainstormSessions
     {
         public static void Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
             Log.Logger = new LoggerConfiguration()
-               .MinimumLevel.Debug()
-               .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
-               .WriteTo.Email(
-                    from: "noreply@yourproject.local",
-                    to: "admin@yourproject.local",
-                    host: "localhost",
-                    port: 25,
-                    subject: "BrainstormSessions Error Log",
-                    restrictedToMinimumLevel: LogEventLevel.Error
-                )
-               .CreateLogger();
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
             try
             {
                 Log.Information("Starting web host");

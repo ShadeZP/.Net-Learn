@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using BrainstormSessions.Infrastructure;
@@ -9,6 +6,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BrainstormSessions
 {
@@ -35,6 +36,7 @@ namespace BrainstormSessions
 
                 InitializeDatabaseAsync(repository).Wait();
             }
+            app.UseSerilogRequestLogging();
 
             app.UseStaticFiles();
 
